@@ -1,0 +1,77 @@
+.fc {
+    table.column-day-table {
+        width: 100%;
+        height: 100%;
+
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Old versions of Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        
+        thead {
+            tr {
+                th {
+                    font-size: 1.4rem;
+                    height: 2rem;
+
+                    &:first-child {
+                        width: 2rem;
+                    }
+
+                    &.current-date {
+                        background-color: beige;
+                    }
+
+                    &.time-col {
+                        width: 2%;
+                    }
+
+                    &.day-col {
+                        width: 14%;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    &:first-child {
+                        width: 2.5rem;
+                    }
+
+                    &.current-date {
+                        background-color: beige;
+                    }
+
+                    &.editable-col {
+                        background-color: azure;                       
+                    }
+
+                    &.selected-col {
+                        background-color: pink;
+                    }
+
+                    &.time-display {
+                        text-align: right;
+                        font-size: 1.1rem;
+                        padding: 5px
+                    }
+
+                    div {
+                        width: 100%;
+                        height: 100%;
+                        background-color: #aaf
+                    }
+                }
+            }
+        }
+    }
+}
