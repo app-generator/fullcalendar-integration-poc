@@ -63,10 +63,14 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
     }
 
     const cellDragEndHandler = () => {
-        if (!startDrag || !endDrag || !endDrag.isSame(startDrag, 'day')) {
-            return
+        if (!!startDrag && !!endDrag && endDrag.isSame(startDrag, 'day') && !isReadOnlyCell(startDrag) && !isReadOnlyCell(endDrag)) {
+            if(startDrag.isAfter(endDrag)) {
+                let swap = startDrag.clone();
+                startDrag = endDrag.clone();
+                endDrag = swap;
+            }
+            props.callbacks.onCompanyColumnDrag(startDrag.toDate(), endDrag.toDate())
         }
-        props.callbacks.onCompanyColumnDrag(startDrag.toDate(), endDrag.toDate())
         document.querySelectorAll(".selected-col").forEach(el => el.classList.remove("selected-col"))
         startDrag = undefined
         endDrag = undefined
@@ -100,6 +104,10 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
         }
     }
 
+    const isReadOnlyCell = (cellDate: Moment) => {
+        return cellDate.isBefore(moment())
+    }
+
     return (
         <table role="presentation" className='column-day-table'>
             <thead role="presentation">
@@ -121,7 +129,7 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
                         <td className="time-display">{hour.format('kk:mm')}</td>
                         {week.map((day, i) => <Fragment key={`cal-cell-${i}`}>
                             <td draggable
-                                className='editable-col'
+                                className={`editable-col ${isReadOnlyCell(toFullDate(day, hour)) ? 'past-col' : ''}`}
                                 onDragStart={_ => cellDragStartHandler(day, hour)}
                                 onDragOver={evt => cellDragOverHandler(evt, day, hour)}
                                 onDragEnd={cellDragEndHandler}
@@ -133,6 +141,7 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
                             </td>
                             <td className='span-col'></td>
                             <td
+                                className={`${isReadOnlyCell(toFullDate(day, hour)) ? 'past-col' : ''}`}
                                 onClick={_ => cellClickHandler('freelancer', day, hour)}
                             >
                             </td>
