@@ -5,9 +5,9 @@
 | ✅ | Set up REPO | - | done |
 | ❌ | Weekly View | - | The navigation needs to jump weeks back & forth |
 | ❌ | Day Column | - | 3 columns |
-| ❌ | - | Left (blue) Companies | Define work shift + number of slots |
+| ❌ | - | Companies (blue) | Define work shift + number of slots |
 | ❌ | - | Middle (white) | Inactive, used as delimiter |
-| ❌ | - | Right (green) Freelancers | They reserve based on allocated shift |
+| ❌ | - | Freelancers (green) | They reserve based on allocated shift |
 | ❌ | Company create shifts (left col) | - | Popup: shift name + number of slots  |
 | ❌ | Company edit shifts (left col) | - | Popup: shift name + number of slots  |
 | ❌ | Company delete shifts (left col) | - | Popup: shift name + number of slots  |
