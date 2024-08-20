@@ -1,7 +1,7 @@
 import { createPlugin, Duration } from '@fullcalendar/core';
 import { DateProfile, EventInstance, ViewProps } from '@fullcalendar/core/internal';
 import moment, { Moment } from 'moment';
-import './ColumnDayView.scss';
+import './ColumnWeekView.scss';
 import { Fragment } from 'react';
 
 
@@ -46,7 +46,7 @@ function toFullDate(date: Moment, hour: Moment) {
     return moment(`${date.format('YYYY-MM-DD')} ${hour.format('HH:mm')}`, 'YYYY-MM-DD HH:mm')
 }
 
-function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThreshold: Duration, callbacks: ColumnDayEvents }) {
+function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayThreshold: Duration, callbacks: ColumnDayEvents }) {
     const week = weekFrom(props.dateProfile?.activeRange?.start)
 
     let startDrag: Moment | undefined = undefined
@@ -145,7 +145,7 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
 
 
 //https://stackoverflow.com/questions/66104254/accessing-context-from-a-custom-view
-export default function createColumnDayView(callbacks: ColumnDayEvents) {
+export default function createColumnWeekView(callbacks: ColumnDayEvents) {
     class MorePropsToView {
         transform(viewProps: ViewProps) {
             return {
@@ -157,9 +157,9 @@ export default function createColumnDayView(callbacks: ColumnDayEvents) {
 
     return createPlugin({
         views: {
-            columnDayView: ColumnDayView as any,
+            ColumnWeekView: ColumnWeekView as any,
         },
-        name: 'columnDayView',
+        name: 'ColumnWeekView',
         viewPropsTransformers: [MorePropsToView]
     })
 }

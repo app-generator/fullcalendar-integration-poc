@@ -4,7 +4,7 @@ import FullCalendar from '@fullcalendar/react';
 import momentPlugin from '@fullcalendar/moment'
 import interactionPlugin from '@fullcalendar/interaction'
 import { Box } from '@mui/material';
-import columnDayView, { ColumnDayEvents } from './ColumnDayView'
+import ColumnWeekView, { ColumnDayEvents } from './ColumnWeekView';
 
 function App() {
 
@@ -39,8 +39,8 @@ function App() {
     <Box sx={{ flexGrow: 1 }}>
       <FullCalendar
         ref={calendarRef}
-        plugins={[columnDayView(callbacks), momentPlugin, interactionPlugin]}
-        initialView='columnDayView'
+        plugins={[ColumnWeekView(callbacks), momentPlugin, interactionPlugin]}
+        initialView='ColumnWeekView'
         selectable={true}
         timeZone='utc'
       />
