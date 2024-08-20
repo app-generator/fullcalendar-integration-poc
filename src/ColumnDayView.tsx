@@ -108,7 +108,7 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
                     {week.map((day, i) =>
                         <th
                             className={`day-col ${isCurrentDate(day) ? 'current-date' : ''}`}
-                            colSpan={2}
+                            colSpan={3}
                             key={`cal-head-${i}`}>
                             {day.format('dddd DD/MM')}
                         </th>
@@ -131,6 +131,7 @@ function ColumnDayView(props: ViewProps & { dateProfile: DateProfile, nextDayThr
                                     hasEvent('company', day, hour) && <div className="cell-event-company"></div>
                                 }
                             </td>
+                            <td className='span-col'></td>
                             <td
                                 onClick={_ => cellClickHandler('freelancer', day, hour)}
                             >

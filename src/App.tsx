@@ -43,6 +43,7 @@ function App() {
         initialView='columnDayView'
         selectable={true}
         timeZone='utc'
+        dateIncrement={{ weeks: 1 }}
       />
     </Box>
   )
