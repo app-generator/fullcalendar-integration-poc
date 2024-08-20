@@ -3,7 +3,7 @@
 | Status | Feature | Issue | info | 
 | --- | --- | --- | --- |
 | ✅ | Set up REPO | - | done |
-| ❌ | Weekly View | - | The navigation needs to jump weeks back & forth |
+| ❌ | Weekly View | [Issue](https://github.com/app-generator/fullcalendar-integration-poc/issues/1) | The navigation needs to jump weeks back & forth |
 | ❌ | Day Column | - | 3 columns |
 | ❌ | - | Companies (blue) | Define work shift + number of slots |
 | ❌ | - | Middle (white) | Inactive, used as delimiter |
