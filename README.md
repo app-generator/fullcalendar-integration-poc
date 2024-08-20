@@ -1,4 +1,6 @@
-# Full Calendar Integration PoC
+# Helpora Shifts
 
-- click "Add Event"
-- drag or click on the background event to "book" parts of it
+| Status | Feature | Issue | info | 
+| --- | --- | --- | --- |
+| ✅ | Set Up REPO | - |  done |
+| ❌ | Weekly View | [Tracker](https://github.com/app-generator/fullcalendar-integration-poc/issues/1) |  done |
