@@ -3,8 +3,8 @@
 | Status | Feature | Issue | info | 
 | --- | --- | --- | --- |
 | ✅ | Set up REPO | - | done |
-| ❌ | Weekly View | [Issue](https://github.com/app-generator/fullcalendar-integration-poc/issues/1) | The navigation needs to jump weeks back & forth |
-| ❌ | Day Column | - | 3 columns |
+| ❌ | Weekly View | [Tracker](https://github.com/app-generator/fullcalendar-integration-poc/issues/1) | The navigation needs to jump weeks back & forth |
+| ❌ | Day Column | [Tracker](https://github.com/app-generator/fullcalendar-integration-poc/issues/2) | 3 columns |
 | ❌ | - | Companies (blue) | Define work shift + number of slots |
 | ❌ | - | Middle (white) | Inactive, used as delimiter |
 | ❌ | - | Freelancers (green) | They reserve based on allocated shift |
