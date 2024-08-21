@@ -45,103 +45,106 @@ function hoursFrom(startTime: string, endTime: string, slotIntervalMinutes: numb
 function toFullDate(date: Moment, hour: Moment) {
     return moment(`${date.format('YYYY-MM-DD')} ${hour.format('HH:mm')}`, 'YYYY-MM-DD HH:mm')
 }
-
 function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayThreshold: Duration, callbacks: ColumnDayEvents }) {
-    const week = weekFrom(props.dateProfile?.activeRange?.start)
+    const week = weekFrom(props.dateProfile?.activeRange?.start);
 
-    let startDrag: Moment | undefined = undefined
-    let endDrag: Moment | undefined = undefined
+    let startDrag: Moment | undefined = undefined;
+    let endDrag: Moment | undefined = undefined;
 
     const cellDragStartHandler = (day: Moment, hour: Moment) => {
-        startDrag = toFullDate(day, hour)
-    }
+        startDrag = toFullDate(day, hour);
+    };
 
     const cellDragOverHandler = (event: any, day: Moment, hour: Moment) => {
-        event.preventDefault()
-        event.target.classList.add("selected-col")
-        endDrag = toFullDate(day, hour)
-    }
+        event.preventDefault();
+        event.target.classList.add("selected-col");
+        endDrag = toFullDate(day, hour);
+    };
 
     const cellDragEndHandler = () => {
         if (!startDrag || !endDrag || !endDrag.isSame(startDrag, 'day')) {
-            return
+            return;
         }
-        props.callbacks.onCompanyColumnDrag(startDrag.toDate(), endDrag.toDate())
-        document.querySelectorAll(".selected-col").forEach(el => el.classList.remove("selected-col"))
-        startDrag = undefined
-        endDrag = undefined
-    }
+        props.callbacks.onCompanyColumnDrag(startDrag.toDate(), endDrag.toDate());
+        document.querySelectorAll(".selected-col").forEach(el => el.classList.remove("selected-col"));
+        startDrag = undefined;
+        endDrag = undefined;
+    };
 
     const getEvent = (type: 'company' | 'freelancer', day: Moment, hour: Moment) => {
-        const cellDate = toFullDate(day, hour)
+        const cellDate = toFullDate(day, hour);
         return Object.values(props.eventStore.instances).find(s =>
-            props.eventStore.defs[s.defId].extendedProps.type === type
-            && moment(s.range.start).isSameOrBefore(cellDate, 'minute')
-            && moment(s.range.end).isSameOrAfter(cellDate, 'minute')
-        )
-    }
+            props.eventStore.defs[s.defId].extendedProps.type === type &&
+            moment(s.range.start).isSameOrBefore(cellDate, 'minute') &&
+            moment(s.range.end).isSameOrAfter(cellDate, 'minute')
+        );
+    };
 
     const hasEvent = (type: 'company' | 'freelancer', day: Moment, hour: Moment) => {
-        return !!getEvent(type, day, hour)
-    }
+        return !!getEvent(type, day, hour);
+    };
 
     const cellClickHandler = (type: 'company' | 'freelancer', day: Moment, hour: Moment) => {
         const event = getEvent(type, day, hour);
         if (!event) {
-            return
+            return;
         }
         switch (type) {
             case 'company':
-                props.callbacks.onCompanyEventClick(event)
-                break
+                props.callbacks.onCompanyEventClick(event);
+                break;
             case 'freelancer':
-                props.callbacks.onFreelancerEventClick(event)
-                break
+                props.callbacks.onFreelancerEventClick(event);
+                break;
         }
-    }
+    };
 
     return (
-        <table role="presentation" className='column-day-table'>
+        <table role="presentation" className="column-day-table">
             <thead role="presentation">
                 <tr role="row">
-                    <th aria-hidden="true" className='time-col'></th>
-                    {week.map((day, i) =>
+                    <th aria-hidden="true" className="time-col"></th>
+                    {week.map((day, i) => (
                         <th
                             className={`day-col ${isCurrentDate(day) ? 'current-date' : ''}`}
-                            colSpan={2}
-                            key={`cal-head-${i}`}>
+                            colSpan={4}
+                            key={`cal-head-${i}`}
+                        >
                             {day.format('dddd DD/MM')}
                         </th>
-                    )}
+                    ))}
                 </tr>
             </thead>
             <tbody role="presentation">
-                {hoursFrom(defaultBusinessHours.startTime, defaultBusinessHours.endTime, 30).map((hour, i) =>
+                {hoursFrom(defaultBusinessHours.startTime, defaultBusinessHours.endTime, 30).map((hour, i) => (
                     <tr key={`hour-slot-${i}`} role="presentation">
                         <td className="time-display">{hour.format('kk:mm')}</td>
-                        {week.map((day, i) => <Fragment key={`cal-cell-${i}`}>
-                            <td draggable
-                                className='editable-col'
-                                onDragStart={_ => cellDragStartHandler(day, hour)}
-                                onDragOver={evt => cellDragOverHandler(evt, day, hour)}
-                                onDragEnd={cellDragEndHandler}
-                                onClick={_ => cellClickHandler('company', day, hour)}
-                            >
-                                {
-                                    hasEvent('company', day, hour) && <div className="cell-event-company"></div>
-                                }
-                            </td>
-                            <td
-                                onClick={_ => cellClickHandler('freelancer', day, hour)}
-                            >
-                            </td>
-                        </Fragment>)}
+                        {week.map((day, i) => (
+                            <Fragment key={`cal-cell-${i}`}>
+                                {[0, 1, 2, 3].map(subCol => (
+                                    <td
+                                        draggable
+                                        className="editable-col"
+                                        onDragStart={() => cellDragStartHandler(day, hour)}
+                                        onDragOver={evt => cellDragOverHandler(evt, day, hour)}
+                                        onDragEnd={cellDragEndHandler}
+                                        onClick={() => cellClickHandler('company', day, hour)}
+                                        key={`sub-col-${subCol}`}
+                                    >
+                                        {subCol === 0 && hasEvent('company', day, hour) && (
+                                            <div className="cell-event-company"></div>
+                                        )}
+                                    </td>
+                                ))}
+                            </Fragment>
+                        ))}
                     </tr>
-                )}
+                ))}
             </tbody>
         </table>
     );
 }
+
 
 
 //https://stackoverflow.com/questions/66104254/accessing-context-from-a-custom-view
