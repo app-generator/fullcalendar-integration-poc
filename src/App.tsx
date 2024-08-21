@@ -26,11 +26,11 @@ function App() {
       });
     },
 
-    onCompanyEventClick(event) {
+    onCompanyEventClick(event:any) {
       console.log(event);
     },
 
-    onFreelancerEventClick(event) {
+    onFreelancerEventClick(event:any) {
       console.log(event);
     }
   };
@@ -51,13 +51,7 @@ function App() {
     if (calendarApi) {
       let newStartDate = new Date(currentStartDate ?? calendarApi.view.currentStart);
       newStartDate.setDate(newStartDate.getDate() - 7); // Jump 7 days backward
-
-      const today = new Date();
-      if (newStartDate < today) {
-        alert("You can't choose a date that is in the past.");
-        return;
-      }
-
+      
       calendarApi.gotoDate(newStartDate);
       setCurrentStartDate(newStartDate);
     }

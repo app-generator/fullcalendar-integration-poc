@@ -59,6 +59,14 @@
                         // background-color: pink;
                     }
 
+                    &.green-col {
+                        background-color: #5196A2;
+                    }
+
+                    &.blue-col {
+                        background-color: #61C674;
+                    }
+
                     &.time-display {
                         text-align: right;
                         font-size: 1.1rem;
@@ -68,7 +76,7 @@
                     div {
                         width: 100%;
                         height: 100%;
-                        background-color: #aaf
+                        // background-color: #aaf
                     }
                 }
             }

@@ -5,6 +5,7 @@ import './ColumnWeekView.scss';
 import { Fragment } from 'react';
 
 
+import dummyEvents from './event';
 export interface ColumnDayEvents {
     onCompanyColumnDrag: (start: Date | string, end: Date | string) => void
     onCompanyEventClick: (event: EventInstance) => void
@@ -45,6 +46,7 @@ function hoursFrom(startTime: string, endTime: string, slotIntervalMinutes: numb
 function toFullDate(date: Moment, hour: Moment) {
     return moment(`${date.format('YYYY-MM-DD')} ${hour.format('HH:mm')}`, 'YYYY-MM-DD HH:mm')
 }
+
 function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayThreshold: Duration, callbacks: ColumnDayEvents }) {
     const week = weekFrom(props.dateProfile?.activeRange?.start);
 
@@ -73,10 +75,10 @@ function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayTh
 
     const getEvent = (type: 'company' | 'freelancer', day: Moment, hour: Moment) => {
         const cellDate = toFullDate(day, hour);
-        return Object.values(props.eventStore.instances).find(s =>
-            props.eventStore.defs[s.defId].extendedProps.type === type &&
-            moment(s.range.start).isSameOrBefore(cellDate, 'minute') &&
-            moment(s.range.end).isSameOrAfter(cellDate, 'minute')
+        return dummyEvents.find(event =>
+            event.type === type &&
+            event.start.isSameOrBefore(cellDate, 'minute') &&
+            event.end.isSameOrAfter(cellDate, 'minute')
         );
     };
 
@@ -84,20 +86,48 @@ function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayTh
         return !!getEvent(type, day, hour);
     };
 
+    const getEventClass = (day: Moment, hour: Moment) => {
+        const companyEvent = getEvent('company', day, hour);
+        const freelancerEvent = getEvent('freelancer', day, hour);
+
+        if (companyEvent) {
+            return 'blue-col';
+        } else if (freelancerEvent) {
+            return 'green-col';
+        } else {
+            return 'editable-col';
+        }
+    };
+
+    function toEventInstance(event: any): EventInstance {
+        return {
+            instanceId: event.id, // This should be a unique identifier for the instance
+            defId: event.id, // This could be the same or a different identifier depending on your logic
+            range: {
+                start: event.start.toDate(),
+                end: event.end.toDate(),
+            },
+            forcedStartTzo: null,
+            forcedEndTzo: null,
+        };
+    }
+
     const cellClickHandler = (type: 'company' | 'freelancer', day: Moment, hour: Moment) => {
         const event = getEvent(type, day, hour);
         if (!event) {
             return;
         }
+        const eventInstance = toEventInstance(event);
         switch (type) {
             case 'company':
-                props.callbacks.onCompanyEventClick(event);
+                props.callbacks.onCompanyEventClick(eventInstance);
                 break;
             case 'freelancer':
-                props.callbacks.onFreelancerEventClick(event);
+                props.callbacks.onFreelancerEventClick(eventInstance);
                 break;
         }
     };
+    
 
     return (
         <table role="presentation" className="column-day-table">
@@ -124,7 +154,7 @@ function ColumnWeekView(props: ViewProps & { dateProfile: DateProfile, nextDayTh
                                 {[0, 1, 2, 3].map(subCol => (
                                     <td
                                         draggable
-                                        className="editable-col"
+                                        className={`editable-col ${getEventClass(day, hour)}`}
                                         onDragStart={() => cellDragStartHandler(day, hour)}
                                         onDragOver={evt => cellDragOverHandler(evt, day, hour)}
                                         onDragEnd={cellDragEndHandler}
