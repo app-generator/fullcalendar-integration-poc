@@ -68,24 +68,21 @@ const TimeSlotTable: React.FC = () => {
     fetchTimeSlot(startDate);
   }, [startDate]);
 
-  const handleDrop = (item: any, time: string, shift: Shift, row: number, col: number) => {
+  const handleDrop = (item: any, time: string, shift: any, row: number, col: number) => {
     const draggedShift = item.shift; // Retrieve the shift from the dragged item
-    const draggedSlot = draggedShift.slots.find((slot: any) => slot.time === item.time);
 
-    if (draggedSlot) {
-      const idList = item.isFreelancer ? draggedSlot.freelancer_slot_ids : draggedSlot.company_slot_ids;
-
+  
+ 
       const payload = {
-        id_list: idList,
-        date_time: `${shift.date} ${time}`
+        new_datetime: `${shift.date} ${time}`
       };
 
-      api.bulkUpdateTimeSlot(payload).then((response: any) => {
+      api.shiftMove(item.shift.shift, payload).then((response: any) => {
         fetchTimeSlot(startDate);
       }, (error: any) => {
 
       })
-    }
+    
   };
 
   const handleNext = () => {

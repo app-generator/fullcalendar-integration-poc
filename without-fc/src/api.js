@@ -12,6 +12,7 @@ const useApi = () => {
         getSlotListFilter: (params = {}) => interceptor.get(`/shift_poc/slot-list/`, { params: params }),
         deleteSlot: (id, params = {}) => interceptor.delete(`/shift_poc/timeslots/${id}`, { params: params }),
         bookTimeSlot: (id, data, params = {}) => interceptor.put(`/shift_poc/timeslots/${id}/book/`, data, { params: params }),
+        shiftMove: (id, data, params = {}) => interceptor.put(`/shift_poc/move/${id}/`, data, { params: params }),
 
         updateShift: (id, data, params = {}) => interceptor.put(`shift_poc/shift/${id}/edit/`, data, { params: params }),
 
