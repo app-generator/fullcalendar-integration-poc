@@ -181,6 +181,7 @@ const TimeSlotTable: React.FC = () => {
                         onDrop={(item, time, shift, row, col) => handleDrop(item, time, shift, row, col)}
                         onDoubleClick={() => openModal(slot.time, shift.date)}
                         openModalSlotList={openModalSlotList}
+                        refresh={fetchTimeSlotViaOther}
                       />
                       <td className="border border-gray-300 px-4 py-2 w-20"></td> {/* Empty Column */}
                       <DraggableDroppableCell
@@ -193,6 +194,7 @@ const TimeSlotTable: React.FC = () => {
                         col={index * 4}
                         onDrop={(item, time, shift, row, col) => handleDrop(item, time, shift, row, col)}
                         openModalSlotList={openModalSlotList}
+                        refresh={fetchTimeSlotViaOther}
                         // onDoubleClick={() => openModal(slot.time, shift.date)}
                       />
                       <td className="border border-r-4 border-gray-300 px-4 py-2 w-20"></td> {/* Empty Column */}
