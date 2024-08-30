@@ -80,7 +80,7 @@ const TimeSlotTable: React.FC = () => {
         date_time: `${shift.date} ${time}`
       };
 
-      api.updateTimeSlot(payload).then((response: any) => {
+      api.bulkUpdateTimeSlot(payload).then((response: any) => {
         fetchTimeSlot(startDate);
       }, (error: any) => {
 

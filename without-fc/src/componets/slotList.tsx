@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useApi from "../api";
 import { error } from "console";
 import Swal from 'sweetalert2'
-
+import EditModal from "./slotEdit";
 
 interface SlotListModalProps {
   isOpen: boolean;
@@ -19,6 +19,9 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
 }) => {
   
   const [slotList, setSlotList] = useState<any[]>([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editItem, setEditItem] = useState<any>(null);
+
   const api = useApi();
 
   const onDelete = (id: string) => {
@@ -47,9 +50,11 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
   };
   
 
-  const onEdit = (id: string) => {
-    
-  }
+  const onEdit = (item: any) => {
+    setEditItem(item);
+    setIsEditModalOpen(true);
+  };
+  
 
   const onBook = (id: string) => {
     api.bookTimeSlot(id).then((response) => {
@@ -79,7 +84,8 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+    <>
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-xl font-bold mb-4">Shif Slot List</h2>
 
@@ -126,6 +132,15 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
         </div>
       </div>
     </div>
+
+    <EditModal 
+      isOpen={isEditModalOpen} 
+      onClose={() => setIsEditModalOpen(false)} 
+      item={editItem} 
+      onSave={fetchTimeSlitFilter} 
+    />
+    
+    </>
   );
 };
 
