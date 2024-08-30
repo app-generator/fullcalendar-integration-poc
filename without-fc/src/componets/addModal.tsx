@@ -24,7 +24,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, cellData, fetchTimeSl
     date: cellData,
     status: "PLANNED",
     slot_count: 1,
-    company: "",
+    shift_name: "",
   });
 
   const api = useApi();
@@ -62,7 +62,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, cellData, fetchTimeSl
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-xl font-bold mb-4">Cell Details</h2>
+        <h2 className="text-xl font-bold mb-4">Create Shift (Company Only)</h2>
         
         {/* Date Field */}
         <div className="mb-4">
@@ -74,11 +74,21 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, cellData, fetchTimeSl
             className="border border-gray-300 px-4 py-2 rounded w-full"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Name</label>
+          <input
+            name="shift_name"
+            type="text"
+            onChange={(e) => onSignleSelect("shift_name", e.target.value)}
+            defaultValue={modalFormData.shift_name}
+            className="border border-gray-300 px-4 py-2 rounded w-full"
+          />
+        </div>
         
         {/* Team Select Field */}
    
         {/* Company Select Field */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Company</label>
           <Select
             options={users}
@@ -86,7 +96,9 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, cellData, fetchTimeSl
             onChange={(e:any) => onSignleSelect("company", e.value)}
             className="w-full"
           />
-        </div>
+        </div> */}
+
+
 
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Slot Count</label>

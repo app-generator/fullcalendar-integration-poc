@@ -173,19 +173,6 @@ const TimeSlotTable: React.FC = () => {
                         slot={slot}
                         index={index}
                         time={slot.time}
-                        isFreelancer={true}
-                        shift={shift}
-                        row={i}
-                        col={index * 4}
-                        onDrop={(item, time, shift, row, col) => handleDrop(item, time, shift, row, col)}
-                        openModalSlotList={openModalSlotList}
-                        // onDoubleClick={() => openModal(slot.time, shift.date)}
-                      />
-                      <td className="border border-gray-300 px-4 py-2 w-20"></td> {/* Empty Column */}
-                      <DraggableDroppableCell
-                        slot={slot}
-                        index={index}
-                        time={slot.time}
                         isFreelancer={false}
                         shift={shift}
                         row={i}
@@ -193,6 +180,19 @@ const TimeSlotTable: React.FC = () => {
                         onDrop={(item, time, shift, row, col) => handleDrop(item, time, shift, row, col)}
                         onDoubleClick={() => openModal(slot.time, shift.date)}
                         openModalSlotList={openModalSlotList}
+                      />
+                      <td className="border border-gray-300 px-4 py-2 w-20"></td> {/* Empty Column */}
+                      <DraggableDroppableCell
+                        slot={slot}
+                        index={index}
+                        time={slot.time}
+                        isFreelancer={true}
+                        shift={shift}
+                        row={i}
+                        col={index * 4}
+                        onDrop={(item, time, shift, row, col) => handleDrop(item, time, shift, row, col)}
+                        openModalSlotList={openModalSlotList}
+                        // onDoubleClick={() => openModal(slot.time, shift.date)}
                       />
                       <td className="border border-r-4 border-gray-300 px-4 py-2 w-20"></td> {/* Empty Column */}
                     </React.Fragment>

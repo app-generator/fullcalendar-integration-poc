@@ -71,7 +71,7 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
               key={item.id}
               className="flex justify-between items-center mb-2 p-2 border border-gray-300 rounded"
             >
-              <span>{item?.company?.label}</span>
+              <span>{item?.shift?.name}</span>
               <span>{item.status}</span>
               <div className="flex gap-x-2">
                 <button
