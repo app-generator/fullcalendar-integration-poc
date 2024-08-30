@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useApi from "../api";
 import { error } from "console";
+import Swal from 'sweetalert2'
 
 
 interface SlotListModalProps {
@@ -21,12 +22,30 @@ const SlotListModal: React.FC<SlotListModalProps> = ({
   const api = useApi();
 
   const onDelete = (id: string) => {
-    api.deleteSlot(id).then((response) => {
-      fetchTimeSlitFilter();
-    }, (error) => {
-      console.log(error);
-    })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        api.deleteSlot(id).then(
+          (response) => {
+            Swal.fire('Deleted!', 'The slot has been deleted.', 'success');
+            fetchTimeSlitFilter(); // Refresh the list after deletion
+          },
+          (error) => {
+            Swal.fire('Error!', 'There was an error deleting the slot.', 'error');
+            console.log(error);
+          }
+        );
+      }
+    });
   };
+  
 
   const onEdit = (id: string) => {
     

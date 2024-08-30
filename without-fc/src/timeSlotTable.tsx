@@ -9,6 +9,7 @@ import DraggableDroppableCell from "./componets/draggableDroppableCelltd";
 import AddModal from "./componets/addModal";
 import SlotListModal from "./componets/slotList";
 
+
 interface Slot {
   time: string;
   company_slot: number;
@@ -206,11 +207,14 @@ const TimeSlotTable: React.FC = () => {
         {addModalOpen && <AddModal isOpen={addModalOpen} onClose={closeModal} cellData={addModalData} fetchTimeSlot={fetchTimeSlotViaOther} />} 
         {slotListModalOpen && 
           <SlotListModal
-          isOpen={slotListModalOpen}
-          onClose={() => setSlotListModalOpen(!slotListModalOpen)}
-          data={clickedSlotIds}
-          fetchTimeSlot={fetchTimeSlotViaOther}
-        />
+            isOpen={slotListModalOpen}
+            onClose={() => {
+              setSlotListModalOpen(false);
+              fetchTimeSlotViaOther();
+            }}
+            data={clickedSlotIds}
+            fetchTimeSlot={fetchTimeSlotViaOther}
+          />
         }
       </div>
     </DndProvider>
