@@ -8,7 +8,7 @@ import moment from "moment"; // Import Moment.js
 import DraggableDroppableCell from "./componets/draggableDroppableCelltd";
 import AddModal from "./componets/addModal";
 import SlotListModal from "./componets/slotList";
-
+import { toast } from "react-toastify"; 
 
 interface Slot {
   time: string;
@@ -70,9 +70,6 @@ const TimeSlotTable: React.FC = () => {
 
   const handleDrop = (item: any, time: string, shift: any, row: number, col: number) => {
     const draggedShift = item.shift; // Retrieve the shift from the dragged item
-
-  
- 
       const payload = {
         new_datetime: `${shift.date} ${time}`
       };
@@ -80,7 +77,13 @@ const TimeSlotTable: React.FC = () => {
       api.shiftMove(item.shift.shift, payload).then((response: any) => {
         fetchTimeSlot(startDate);
       }, (error: any) => {
-
+        const errorMessages = error.response.data;
+        // Assuming errorMessages is an object with keys and array of error strings
+        Object.keys(errorMessages).forEach((key) => {
+          errorMessages[key].forEach((msg: string) => {
+            toast.error(msg); // Display each error message
+          });
+        });
       })
     
   };

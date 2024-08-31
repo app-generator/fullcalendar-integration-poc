@@ -132,6 +132,7 @@ const DraggableDroppableCell: React.FC<{
           shift={shift}
           slot_count={value}
           refresh={refresh}
+          time={time}
         />
       )}
     </td>
